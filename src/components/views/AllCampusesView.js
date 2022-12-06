@@ -28,6 +28,7 @@ const AllCampusesView = (props) => {
           <p>{campus.address}</p>
           <p>{campus.description}</p>
 	  <p>Enrolled students: {campus.students.length}</p>
+	  <div>Students:{campus.students.map((student) => <p>{student.firstname} {student.lastname}</p>)}</div>
           <hr/>
         </div>
       ))}

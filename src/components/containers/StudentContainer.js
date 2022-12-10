@@ -8,22 +8,57 @@ If needed, it also defines the component's "connect" function.
 import Header from './Header';
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchStudentThunk } from "../../store/thunks";
+import { Redirect } from 'react-router-dom';
+import { 
+  fetchStudentThunk,
+  deleteStudentThunk,
+ } from "../../store/thunks";
 import { StudentView } from "../views";
 
 class StudentContainer extends Component {
+  // Initialize state
+  constructor(props){
+    super(props);
+    this.state = {
+      redirect: false, 
+    };
+  }
+  
   // Get student data from back-end database
   componentDidMount() {
-    //getting student ID from url
+    // Get student ID from url
     this.props.fetchStudent(this.props.match.params.id);
+  }
+
+  // Take action after user click the delete button
+  handleDelete = async event => {
+    // Delete student in back-end database
+    await this.props.deleteStudent(this.props.match.params.id);
+
+    // Update state, and trigger redirect to show all students
+    this.setState({
+      redirect: true, 
+    });
+  }
+
+  // Unmount when the component is being removed from the DOM:
+  componentWillUnmount() {
+      this.setState({redirect: false});
   }
 
   // Render Student view by passing student data as props to the corresponding View component
   render() {
+    // Redirect to all students page after delete
+    if(this.state.redirect) {
+      return (<Redirect to={`/students`}/>)
+    }
     return (
       <div>
         <Header />
-        <StudentView student={this.props.student} />
+        <StudentView 
+          student={this.props.student}
+          deleteStudent={this.handleDelete} 
+        />
       </div>
     );
   }
@@ -41,6 +76,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
+    deleteStudent: (id) => dispatch(deleteStudentThunk(id)),
   };
 };
 

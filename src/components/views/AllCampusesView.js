@@ -37,9 +37,31 @@ const AllCampusesView = (props) => {
           <p>{campus.description}</p>
           <p>Enrolled students: {campus.students ? campus.students.length : 0}</p>
           { campus.students && campus.students.length > 0 ?
-          <div>Students:{campus.students.map((student) => <p>{student.firstname} {student.lastname}</p>)}</div>
+          <div>
+          <br/>
+            <h2><u>Students:</u></h2> {
+              campus.students.map((student) => (
+                <div key={`${campus.id}_${student.id}`}>
+                <br/>
+                <p><strong><u>Name:</u></strong> {student.firstname} {student.lastname}</p>
+                <p><strong><u>Email:</u></strong> {student.email}</p>
+                {student.gpa
+                ? <p><strong><u>GPA:</u></strong> {student.gpa}</p>
+                : <p><strong><u>GPA:</u></strong> N/A</p>
+                }
+                </div>
+              ))
+            }
+          </div>
           : null }
+          <br/>
+          <br/>
+          <Link to={`/campus/${campus.id}/editcampus`}>
+            <button>Edit Campus</button>
+          </Link>
+          <br/>
           <button onClick={() => deleteCampus(campus.id)}>Delete</button>
+          <br/><br/>
           <hr/>
         </div>
       ))}

@@ -36,6 +36,7 @@ const useStyles = makeStyles( () => ({
 
 const NewStudentView = (props) => {
   const {handleChange, handleSubmit } = props;
+  const defaultCampusId = props.defaultCampusId ? props.defaultCampusId : null;
   const classes = useStyles();
 
   // Render a New Student view with an input form
@@ -52,24 +53,47 @@ const NewStudentView = (props) => {
           </div>
           <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
             <label style= {{color:'#11153e', fontWeight: 'bold'}}>First Name: </label>
-            <input type="text" name="firstname" onChange ={(e) => handleChange(e)} />
+            <input type="text" name="firstname" required onChange ={(e) => handleChange(e)} />
             <br/>
             <br/>
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>Last Name: </label>
-            <input type="text" name="lastname" onChange={(e) => handleChange(e)} />
+            <input type="text" name="lastname" required onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
 
-	    <label style={{color:'#11153e', fontWeight: 'bold'}}>Email: </label>
-	    <input type="email" name="email" onChange={(e) => handleChange(e)} />
-	    <br/>
-	    <br/>
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>Email: </label>
+            <input type="email" name="email" required onChange={(e) => handleChange(e)} />
+            <br/>
+            <br/>
 
-            <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
-            <input type="text" name="campusId" onChange={(e) => handleChange(e)} />
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>Image URL: </label>
+            <input type="text" name="imageUrl" onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
+
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>GPA: </label>
+            <input type="number" name="gpa" min="0" max="4" step="0.1" onChange={(e) => handleChange(e)} />
+            <br/>
+            <br/>
+
+            {
+              defaultCampusId
+              ?
+              <>
+              <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
+              <input type="number" name="campusId" value={defaultCampusId} readOnly/>
+              <br/>
+              <br/>
+              </>
+              :
+              <>
+              <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
+              <input type="number" name="campusId" min="1" step="1" onChange={(e) => handleChange(e)} />
+              <br/>
+              <br/>
+              </>
+            }
 
             <Button variant="contained" color="primary" type="submit">
               Submit

@@ -25,16 +25,28 @@ const AllStudentsView = (props) => {
     <div>
       <h1>All Students</h1>
 
-      {students.map((student) => {
+      {students.sort((a,b) => a.id > b.id ? 1 : -1).map((student) => {
           let name = student.firstname + " " + student.lastname;
           return (
             <div key={student.id}>
               <Link to={`/student/${student.id}`}>
                 <h2>{name}</h2>
               </Link>
+              {student.imageUrl
+                ?<img src={student.imageUrl} alt={name}/>
+                : null
+              }
               <p>{student.email}</p>
-              {student.gpa ? <p>GPA: {student.gpa}</p> : null }
+              {student.gpa 
+                ? <p>GPA: {student.gpa}</p> 
+                : null 
+              }
               <button onClick={() => deleteStudent(student.id)}>Delete</button>
+              <br/>
+                <Link to={`/student/${student.id}/editstudent`}>
+                  <button>Edit Student</button>
+                </Link>
+              <br/><br/>
               <hr/>
             </div>
           );

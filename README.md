@@ -8,3 +8,9 @@ This repository is the client (front-end) starter code for Final Project (CRUD A
 3.	Go into the "client-starter-code" folder, enter the command to install dependencies: `npm install` 
 4.	Start the client application by entering the command: `npm start` 
 5.	After the client application is successfully started, a web browser is automatically opened at the address: `http://localhost:3000` 
+
+### Group Members:
+
+Name: Jerrod Mitchell
+Github: Jokism
+
